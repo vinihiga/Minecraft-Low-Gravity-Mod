@@ -34,34 +34,4 @@ public final class LowGravityMod {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {}
-
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-    public class ClientModEvents {
-        @SubscribeEvent
-        public static void onLivingEvent(LivingEvent livingEvent) {
-            var entity = livingEvent.getEntity();
-
-            if (entity == null) {
-                return;
-            }
-
-            if (entity.getDeltaMovement().y < 0) {
-                entity.setDeltaMovement(entity.getDeltaMovement().multiply(1, 0.75, 1));
-            }
-        }
-
-        @SubscribeEvent
-        public static void onKeyInputEvent(InputEvent.Key event) {
-            var localPlayer = Minecraft.getInstance().player;
-            var clientOptions = Minecraft.getInstance().options;
-
-            if (localPlayer == null) {
-                return;
-            }
-
-            if (clientOptions.keyJump.isDown() && !localPlayer.isJumping()) {
-                localPlayer.push(0f, 1.0f, 0f);
-            }
-        }
-    }
 }
